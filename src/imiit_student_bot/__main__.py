@@ -3,9 +3,17 @@ import click
 
 
 @click.command()
+@click.argument(
+    "token",
+    type=str,
+)
 @click.version_option()
-def main() -> None:
-    """Imiit Student Bot."""
+def main(token: str) -> None:
+    """Imiit Student Bot.
+
+    Args:
+        token: Bot authentication token.
+    """
 
 
 if __name__ == "__main__":
