@@ -1,0 +1,12 @@
+{
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "\u041d\u0438\u043a\u043e\u043b\u0430\u0439 \u0418\u0432\u0430\u043d\u043e\u0432",
+  "development_status": "Development Status :: 2 - Pre-Alpha",
+  "email": "nikolai.in@tuta.io",
+  "friendly_name": "Imiit Student Bot",
+  "github_user": "nikolai-in",
+  "license": "GPL-3.0",
+  "package_name": "imiit_student_bot",
+  "project_name": "imiit-student-bot",
+  "version": "0.0.0"
+}
