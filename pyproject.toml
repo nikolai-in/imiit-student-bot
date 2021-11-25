@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "imiit-student-bot"
-version = "0.0.0"
+version = "1.0.0"
 description = "Imiit Student Bot"
 authors = ["Николай Иванов <nikolai.in@tuta.io>"]
 license = "GPL-3.0"
@@ -18,6 +18,7 @@ Changelog = "https://github.com/nikolai-in/imiit-student-bot/releases"
 [tool.poetry.dependencies]
 python = "^3.7"
 click = "^8.0.1"
+python-telegram-bot = "^13.8.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -56,7 +57,7 @@ source = ["imiit_student_bot"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 100
+fail_under = 0
 
 [tool.mypy]
 strict = true
