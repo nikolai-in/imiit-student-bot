@@ -1,6 +1,7 @@
 """Command-line interface."""
 import json
 import logging
+import re
 from functools import wraps
 
 import click
@@ -122,7 +123,6 @@ def timetable_callback(update: Update, _, lang: str) -> None:
 def send_timetable(update: Update, context: CallbackContext, lang: str) -> None:
     """Send a map to the university."""
     group = context.match.group(0)
-    logger.info(response.get(lang).get("send_timetable").format(group=group))
     update.message.reply_html(
         response.get(lang).get("send_timetable").format(group=group)
     )
@@ -155,17 +155,32 @@ def main(token: str) -> None:
 
     dispatcher.add_handler(
         MessageHandler(
-            Filters.regex(r"/(Об ИУЦТ)|(ИУЦТ)|(IMIIT)|(imiit)/i"), about_callback
+            Filters.regex(re.compile(r"(об )?(иуцт)|(imiit)|(about)", re.IGNORECASE)),
+            about_callback,
         )
     )
     dispatcher.add_handler(
-        MessageHandler(Filters.regex(r"(Карта)|(map)|(Map)"), map_callback)
+        MessageHandler(
+            Filters.regex(re.compile(r"(карта)|(map)", re.IGNORECASE)), map_callback
+        )
     )
     dispatcher.add_handler(
-        MessageHandler(Filters.regex(r"(Расписание)|(Timetable)"), timetable_callback)
+        MessageHandler(
+            Filters.regex(re.compile(r"(расписание)|(timetable)", re.IGNORECASE)),
+            timetable_callback,
+        )
     )
     updater.dispatcher.add_handler(
-        MessageHandler(Filters.regex(r"^([а-яА-Я]{3}-\d{3})"), send_timetable)
+        MessageHandler(
+            Filters.regex(re.compile(r"^([а-я]{3}-\d{3})", re.IGNORECASE)),
+            send_timetable,
+        )
+    )
+    updater.dispatcher.add_handler(
+        MessageHandler(
+            Filters.regex(re.compile(r"^([а-я]{3}-\d{3})", re.IGNORECASE)),
+            timetable_callback,
+        )
     )
 
     dispatcher.add_handler(CallbackQueryHandler(set_language))
