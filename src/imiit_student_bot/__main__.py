@@ -1,9 +1,9 @@
 """Command-line interface."""
-import json
 import logging
 import re
 from functools import wraps
 
+import __data__
 import click
 from telegram import InlineKeyboardButton
 from telegram import InlineKeyboardMarkup
@@ -24,11 +24,11 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-with open("src/imiit_student_bot/response.json", "r") as read_file:
-    response: dict = json.load(read_file)
+
+RESPONSE = __data__.load_responses()
 
 
-def check_language(func: callable):
+def check_language(func: callable) -> callable:
     """Sends typing action while processing func command."""
 
     @wraps(func)
@@ -57,7 +57,7 @@ def language_callback(update: Update, context: CallbackContext) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     update.message.reply_sticker(
-        sticker=response.get("Sticker").get("Lang"), reply_markup=reply_markup
+        sticker=RESPONSE.get("Sticker").get("Lang"), reply_markup=reply_markup
     )
 
 
@@ -77,20 +77,20 @@ def start_command(update: Update, context: CallbackContext, lang: str) -> None:
     user = update.effective_user
     context.bot.send_sticker(
         chat_id=update.effective_chat.id,
-        sticker=response.get("Sticker").get("Start"),
+        sticker=RESPONSE.get("Sticker").get("Start"),
     )
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=response.get(lang).get("Start").format(user=user.mention_html()),
+        text=RESPONSE.get(lang).get("Start").format(user=user.mention_html()),
         parse_mode=ParseMode.HTML,
-        reply_markup=ReplyKeyboardMarkup(response.get(lang).get("Keyboard")),
+        reply_markup=ReplyKeyboardMarkup(RESPONSE.get(lang).get("Keyboard")),
     )
 
 
 @check_language
 def about_callback(update: Update, context: CallbackContext, lang: str) -> None:
     """Send info about the university."""
-    about_dict = response.get(lang).get("About")
+    about_dict = RESPONSE.get(lang).get("About")
     keyboard = [
         [InlineKeyboardButton(button_text, url=link)]
         for button_text, link in about_dict.items()
@@ -98,15 +98,15 @@ def about_callback(update: Update, context: CallbackContext, lang: str) -> None:
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_sticker(
-        response.get("Sticker").get("About"), reply_markup=reply_markup
+        RESPONSE.get("Sticker").get("About"), reply_markup=reply_markup
     )
 
 
 @check_language
 def map_callback(update: Update, _, lang: str) -> None:
     """Send a map to the university."""
-    update.message.reply_sticker(response.get("Sticker").get("Map"))
-    update.message.reply_html(text=response.get(lang).get("Map"))
+    update.message.reply_sticker(RESPONSE.get("Sticker").get("Map"))
+    update.message.reply_html(text=RESPONSE.get(lang).get("Map"))
     update.message.reply_location(
         latitude=55.7878313846929, longitude=37.60799488989068
     )
@@ -115,8 +115,8 @@ def map_callback(update: Update, _, lang: str) -> None:
 @check_language
 def timetable_callback(update: Update, _, lang: str) -> None:
     """Send a map to the university."""
-    update.message.reply_sticker(response.get("Sticker").get("Timetable"))
-    update.message.reply_html(text=response.get(lang).get("Timetable"))
+    update.message.reply_sticker(RESPONSE.get("Sticker").get("Timetable"))
+    update.message.reply_html(text=RESPONSE.get(lang).get("Timetable"))
 
 
 @check_language
@@ -124,7 +124,7 @@ def send_timetable(update: Update, context: CallbackContext, lang: str) -> None:
     """Send a map to the university."""
     group = context.match.group(0)
     update.message.reply_html(
-        response.get(lang).get("send_timetable").format(group=group)
+        RESPONSE.get(lang).get("send_timetable").format(group=group)
     )
 
 
