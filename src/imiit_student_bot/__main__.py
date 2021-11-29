@@ -4,7 +4,6 @@ import re
 from functools import wraps
 
 import click
-import data
 from telegram import InlineKeyboardButton
 from telegram import InlineKeyboardMarkup
 from telegram import ParseMode
@@ -18,6 +17,8 @@ from telegram.ext import MessageHandler
 from telegram.ext import PicklePersistence
 from telegram.ext import Updater
 
+from imiit_student_bot import __data__
+
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
@@ -25,7 +26,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-RESPONSE = data.load_responses()
+RESPONSE = __data__.load_responses()
 
 
 def check_language(func: callable) -> callable:
