@@ -10,3 +10,4 @@
 /src/*.egg-info/
 __pycache__/
 /user_data.pickle
+/src/imiit_student_bot/groups.json

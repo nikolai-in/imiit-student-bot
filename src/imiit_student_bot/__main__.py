@@ -26,7 +26,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-RESPONSE = __data__.load_responses()
+RESPONSE = __data__.RESPONSE
+GROUPS = __data__.get_groups()
 
 
 def check_language(func: callable) -> callable:
@@ -115,7 +116,7 @@ def map_callback(update: Update, _, lang: str) -> None:
 
 @check_language
 def timetable_callback(update: Update, _, lang: str) -> None:
-    """Send a map to the university."""
+    """Send a timetable  instruction."""
     update.message.reply_sticker(RESPONSE.get("Sticker").get("Timetable"))
     update.message.reply_html(text=RESPONSE.get(lang).get("Timetable"))
 
@@ -123,10 +124,23 @@ def timetable_callback(update: Update, _, lang: str) -> None:
 @check_language
 def send_timetable(update: Update, context: CallbackContext, lang: str) -> None:
     """Send a map to the university."""
-    group = context.match.group(0)
-    update.message.reply_html(
-        RESPONSE.get(lang).get("send_timetable").format(group=group)
-    )
+    group = context.match.group(0).lower()
+
+    logger.info(GROUPS, group)
+
+    if group in GROUPS:
+        try:
+            timetable = __data__.get_timetable(GROUPS[group])
+        except KeyError:
+            timetable = [{"Ошибка": {"Ошибка": "Ошибка"}}]
+        # update.message.reply_text(f"{group}:\n {text}")
+
+
+@check_language
+def unknown_callback(update: Update, _, lang: str) -> None:
+    """Send a map to the university."""
+    update.message.reply_sticker(RESPONSE.get("Sticker").get("Unknown"))
+    update.message.reply_html(text=RESPONSE.get(lang).get("Unknown"))
 
 
 @click.command()
@@ -173,15 +187,12 @@ def main(token: str) -> None:
     )
     updater.dispatcher.add_handler(
         MessageHandler(
-            Filters.regex(re.compile(r"^([а-я]{3}-\d{3})", re.IGNORECASE)),
+            Filters.regex(re.compile(r"([а-я]{3,5}-\d{3})", re.IGNORECASE)),
             send_timetable,
         )
     )
-    updater.dispatcher.add_handler(
-        MessageHandler(
-            Filters.regex(re.compile(r"^([а-я]{3}-\d{3})", re.IGNORECASE)),
-            timetable_callback,
-        )
+    dispatcher.add_handler(
+        MessageHandler(Filters.text & ~Filters.command, unknown_callback)
     )
 
     dispatcher.add_handler(CallbackQueryHandler(set_language))
