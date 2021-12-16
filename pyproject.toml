@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "imiit-student-bot"
-version = "1.0.0"
+version = "0.99.0"
 description = "Imiit Student Bot"
 authors = ["Николай Иванов <nikolai.in@tuta.io>"]
 license = "GPL-3.0"

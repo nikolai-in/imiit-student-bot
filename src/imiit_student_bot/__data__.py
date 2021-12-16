@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 RESPONSE = {
     "en": {
         "Start": "👋 Sup {user}! I am a telegram bot for IMIIT students, you can use me to get class schedule, "
-                 "that you can add to your calendar, a map and links to university information resources 🎓",
+        "that you can add to your calendar, a map and links to university information resources 🎓",
         "About": {
             "Website": "https://imiit.ru",
             "Contacts": "https://imiit.ru/contacts",
@@ -17,7 +17,7 @@ RESPONSE = {
             "Youtube": "https://www.youtube.com/channel/UCqKcmSQ2onutsAxyouiV8Dg",
         },
         "Timetable": "To get the timetable, send me a message with the name of your group in the format "
-                     "“<b>утц-111</b>”",
+        "“<b>утц-111</b>”",
         "send_timetable": "<a href='https://miit.ru/timetable?query={group}'>Click here and choose {group}</a>",
         "Map": "I suppose you need a map...",
         "Unknown": "Whoops... I cannot understand you",
@@ -25,8 +25,8 @@ RESPONSE = {
     },
     "ru": {
         "Start": "👋 Привет {user}! Я телеграм бот для студентов ИУЦТ, с помощью меня ты можешь получить рассписание "
-                 "занятий, которое можно добавить себе в календарь, карту и ссылки на информационные ресурсы "
-                 "университета 🎓",
+        "занятий, которое можно добавить себе в календарь, карту и ссылки на информационные ресурсы "
+        "университета 🎓",
         "About": {
             "Сайт": "https://imiit.ru",
             "Контакты": "https://imiit.ru/contacts",
@@ -35,7 +35,7 @@ RESPONSE = {
             "Ютуб": "https://www.youtube.com/channel/UCqKcmSQ2onutsAxyouiV8Dg",
         },
         "Timetable": "Чтобы получить расписание занятий отпраь мне сообщение с названием своей группы в формате "
-                     "“<b>утц-111</b>”",
+        "“<b>утц-111</b>”",
         "send_timetable": "<a href='https://miit.ru/timetable?query={group}'>Нажми сюда и выбери {group}</a>",
         "Map": "Полагаю, вам нужна карта...",
         "Unknown": "Упс... Я не могу вас понять",
