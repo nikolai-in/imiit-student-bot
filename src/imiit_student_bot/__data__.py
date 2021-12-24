@@ -1,11 +1,11 @@
 """Reads data for student bot."""
+import json
+import os
 import re
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import json
-import os
 
 
 script_dir = os.path.dirname(__file__)
@@ -22,7 +22,7 @@ def get_groups() -> dict:
     soup = BeautifulSoup(group_list, "html.parser")
     return {
         group.string.strip().lower(): group["href"].strip("/timetable/")
-        for group in soup.find_all("a", href=re.compile("\/timetable\/\d*"))
+        for group in soup.find_all("a", href=re.compile(r"\/timetable\/\d*"))
     }
 
 

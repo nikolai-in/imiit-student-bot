@@ -79,29 +79,71 @@ def set_language(update: Update, context: CallbackContext) -> None:
         elif query.data == "2block":
             send_map(update=update, context=context, coordinates=[55.788358, 37.606137])
         elif query.data == "3block":
-            send_map(update=update, context=context, coordinates=[55.787727081509104, 37.60567931554758])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.787727081509104, 37.60567931554758],
+            )
         elif query.data == "4block":
-            send_map(update=update, context=context, coordinates=[55.78901969531943, 37.605418700515905])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.78901969531943, 37.605418700515905],
+            )
         elif query.data == "5block":
-            send_map(update=update, context=context, coordinates=[55.78756636282692, 37.60707014320361])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.78756636282692, 37.60707014320361],
+            )
         elif query.data == "6block":
-            send_map(update=update, context=context, coordinates=[55.787978281072874, 37.60636808384558])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.787978281072874, 37.60636808384558],
+            )
         elif query.data == "7block":
-            send_map(update=update, context=context, coordinates=[55.789222201289334, 37.60238532259049])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.789222201289334, 37.60238532259049],
+            )
         elif query.data == "8block":
-            send_map(update=update, context=context, coordinates=[55.788572964535184, 37.608915467528824])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.788572964535184, 37.608915467528824],
+            )
         elif query.data == "9block":
-            send_map(update=update, context=context, coordinates=[55.788327045074325, 37.608818543846255])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.788327045074325, 37.608818543846255],
+            )
         elif query.data == "10block":
-            send_map(update=update, context=context, coordinates=[55.78826645944621, 37.60937608946778])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.78826645944621, 37.60937608946778],
+            )
         elif query.data == "11block":
-            send_map(update=update, context=context, coordinates=[55.78865151621011, 37.60690294638685])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.78865151621011, 37.60690294638685],
+            )
         elif query.data == "12block":
-            send_map(update=update, context=context, coordinates=[55.791687201731946, 37.604701191445606])
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.791687201731946, 37.604701191445606],
+            )
         elif query.data == "13block":
-            send_map(update=update, context=context, coordinates=[55.788546828542835, 37.6075251499347])
-
-
+            send_map(
+                update=update,
+                context=context,
+                coordinates=[55.788546828542835, 37.6075251499347],
+            )
 
 
 @check_language
@@ -136,7 +178,11 @@ def about_callback(update: Update, context: CallbackContext, lang: str) -> None:
 
 
 def send_map(update: Update, context: CallbackContext, coordinates: list):
-    context.bot.send_location(chat_id=update.effective_chat.id, latitude=coordinates[0], longitude=coordinates[1])
+    context.bot.send_location(
+        chat_id=update.effective_chat.id,
+        latitude=coordinates[0],
+        longitude=coordinates[1],
+    )
 
 
 @check_language
@@ -154,10 +200,9 @@ def map_callback(update: Update, _, lang: str) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     update.message.reply_sticker(RESPONSE.get("Sticker").get("Map"))
-    update.message.reply_html(text=RESPONSE.get(lang).get("Map"), reply_markup=reply_markup)
-
-
-
+    update.message.reply_html(
+        text=RESPONSE.get(lang).get("Map"), reply_markup=reply_markup
+    )
 
 
 @check_language
@@ -182,7 +227,13 @@ def send_timetable(update: Update, context: CallbackContext, lang: str) -> None:
         else:
             for timetable in timetables:
                 for day, schedule in timetable.items():
-                    text = " ".join([f"{time}: {subject}\n" for time, subject in schedule.items() if subject == subject])
+                    text = " ".join(
+                        [
+                            f"{time}: {subject}\n"
+                            for time, subject in schedule.items()
+                            if subject == subject
+                        ]
+                    )
                     update.message.reply_text(f"{day}:\n {text}")
     else:
         unknown_callback(update=update, context=context)
